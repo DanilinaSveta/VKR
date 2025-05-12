@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="VKR">
+        <createTable tableName="DESCRIPTION_OF_THE_TOPIC">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_DESCRIPTION_OF_THE_TOPIC"/>
+            </column>
+            <column name="TOPIC_ID" type="UUID"/>
+            <column name="ANNOTATION" type="VARCHAR(255)"/>
+            <column name="LITERATURE_RECOMMENDATIONS" type="VARCHAR(255)"/>
+            <column name="RECOMMENDED_SKILLS" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="VKR">
+        <createTable tableName="DIRECTOR_GRADUATE_STUDENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_DIRECTOR_GRADUATE_STUDENT"/>
+            </column>
+            <column name="TOPIC_ID" type="UUID"/>
+            <column name="TEACHER_ID" type="UUID"/>
+            <column name="STUDENT_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="VKR">
+        <createTable tableName="SKILLS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SKILLS"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="VKR">
+        <createTable tableName="STUDENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STUDENT"/>
+            </column>
+            <column name="NUMBER_OF_TOPIC" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="VKR">
+        <createTable tableName="STUDENT_SKILLS_LINK">
+            <column name="SKILLS_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STUDENT_SKILLS_LINK"/>
+            </column>
+            <column name="STUDENT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STUDENT_SKILLS_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="VKR">
+        <createTable tableName="TEACHER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEACHER"/>
+            </column>
+            <column name="NUMBER_OF_TOPIC" type="INT"/>
+            <column name="MAX_NUMBER_STUDENT" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="VKR">
+        <createTable tableName="TEACHER_SKILLS_LINK">
+            <column name="SKILLS_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEACHER_SKILLS_LINK"/>
+            </column>
+            <column name="TEACHER_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEACHER_SKILLS_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="8" author="VKR">
+        <createTable tableName="TOPIC">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOPIC"/>
+            </column>
+            <column name="TOPIC_NAME" type="VARCHAR(255)"/>
+            <column name="TOPIC_STATUS" type="VARCHAR(255)"/>
+            <column name="ACTIVITY_TOPIC" type="VARCHAR(255)"/>
+            <column name="AUTHOR_TOPIC" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="9" author="VKR">
+        <createTable tableName="TOPIC_STUDENT_LINK">
+            <column name="STUDENT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOPIC_STUDENT_LINK"/>
+            </column>
+            <column name="TOPIC_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOPIC_STUDENT_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="10" author="VKR">
+        <createTable tableName="TOPIC_TEACHER_LINK">
+            <column name="TEACHER_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOPIC_TEACHER_LINK"/>
+            </column>
+            <column name="TOPIC_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOPIC_TEACHER_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="11" author="VKR">
+        <createIndex indexName="IDX_DESCRIPTION_OF_THE_TOPIC_TOPIC" tableName="DESCRIPTION_OF_THE_TOPIC">
+            <column name="TOPIC_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TOPIC_ID" baseTableName="DESCRIPTION_OF_THE_TOPIC"
+                                 constraintName="FK_DESCRIPTION_OF_THE_TOPIC_ON_TOPIC" referencedColumnNames="ID"
+                                 referencedTableName="TOPIC"/>
+    </changeSet>
+    <changeSet id="12" author="VKR">
+        <createIndex indexName="IDX_DIRECTOR_GRADUATE_STUDENT_STUDENT" tableName="DIRECTOR_GRADUATE_STUDENT">
+            <column name="STUDENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="STUDENT_ID" baseTableName="DIRECTOR_GRADUATE_STUDENT"
+                                 constraintName="FK_DIRECTOR_GRADUATE_STUDENT_ON_STUDENT" referencedColumnNames="ID"
+                                 referencedTableName="STUDENT"/>
+    </changeSet>
+    <changeSet id="13" author="VKR">
+        <createIndex indexName="IDX_DIRECTOR_GRADUATE_STUDENT_TEACHER" tableName="DIRECTOR_GRADUATE_STUDENT">
+            <column name="TEACHER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TEACHER_ID" baseTableName="DIRECTOR_GRADUATE_STUDENT"
+                                 constraintName="FK_DIRECTOR_GRADUATE_STUDENT_ON_TEACHER" referencedColumnNames="ID"
+                                 referencedTableName="TEACHER"/>
+    </changeSet>
+    <changeSet id="14" author="VKR">
+        <createIndex indexName="IDX_DIRECTOR_GRADUATE_STUDENT_TOPIC" tableName="DIRECTOR_GRADUATE_STUDENT">
+            <column name="TOPIC_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TOPIC_ID" baseTableName="DIRECTOR_GRADUATE_STUDENT"
+                                 constraintName="FK_DIRECTOR_GRADUATE_STUDENT_ON_TOPIC" referencedColumnNames="ID"
+                                 referencedTableName="TOPIC"/>
+    </changeSet>
+    <changeSet id="15" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="SKILLS_ID" baseTableName="STUDENT_SKILLS_LINK"
+                                 constraintName="FK_STUSKI_ON_SKILLS" referencedColumnNames="ID"
+                                 referencedTableName="SKILLS"/>
+    </changeSet>
+    <changeSet id="16" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="STUDENT_ID" baseTableName="STUDENT_SKILLS_LINK"
+                                 constraintName="FK_STUSKI_ON_STUDENT" referencedColumnNames="ID"
+                                 referencedTableName="STUDENT"/>
+    </changeSet>
+    <changeSet id="17" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="SKILLS_ID" baseTableName="TEACHER_SKILLS_LINK"
+                                 constraintName="FK_TEASKI_ON_SKILLS" referencedColumnNames="ID"
+                                 referencedTableName="SKILLS"/>
+    </changeSet>
+    <changeSet id="18" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="TEACHER_ID" baseTableName="TEACHER_SKILLS_LINK"
+                                 constraintName="FK_TEASKI_ON_TEACHER" referencedColumnNames="ID"
+                                 referencedTableName="TEACHER"/>
+    </changeSet>
+    <changeSet id="19" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="STUDENT_ID" baseTableName="TOPIC_STUDENT_LINK"
+                                 constraintName="FK_TOPSTU_ON_STUDENT" referencedColumnNames="ID"
+                                 referencedTableName="STUDENT"/>
+    </changeSet>
+    <changeSet id="20" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="TOPIC_ID" baseTableName="TOPIC_STUDENT_LINK"
+                                 constraintName="FK_TOPSTU_ON_TOPIC" referencedColumnNames="ID"
+                                 referencedTableName="TOPIC"/>
+    </changeSet>
+    <changeSet id="21" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="TEACHER_ID" baseTableName="TOPIC_TEACHER_LINK"
+                                 constraintName="FK_TOPTEA_ON_TEACHER" referencedColumnNames="ID"
+                                 referencedTableName="TEACHER"/>
+    </changeSet>
+    <changeSet id="22" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="TOPIC_ID" baseTableName="TOPIC_TEACHER_LINK"
+                                 constraintName="FK_TOPTEA_ON_TOPIC" referencedColumnNames="ID"
+                                 referencedTableName="TOPIC"/>
+    </changeSet>
+</databaseChangeLog>
