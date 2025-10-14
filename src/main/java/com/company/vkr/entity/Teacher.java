@@ -1,21 +1,30 @@
 package com.company.vkr.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jdk.jshell.Snippet;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "TEACHER")
+@Table(name = "TEACHER", indexes = {
+        @Index(name = "IDX_TEACHER_NAME", columnList = "NAME_ID")
+})
 @Entity
 public class Teacher implements author {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
+
+    @InstanceName
+    @JoinColumn(name = "NAME_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    private User name;
 
     @Column(name = "NUMBER_OF_TOPIC")
     private Integer numberOfTopic;
@@ -37,6 +46,28 @@ public class Teacher implements author {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "teacher")
     private DirectorGraduateStudent directorGraduateStudent;
+
+    @JoinTable(name = "GROUP_VKR_TEACHER_LINK",
+            joinColumns = @JoinColumn(name = "TEACHER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "GROUP_V_K_R_ID"))
+    @ManyToMany
+    private Collection<GroupVKR> groupVKRs;
+
+    public Collection<GroupVKR> getGroupVKRs() {
+        return groupVKRs;
+    }
+
+    public void setGroupVKRs(Collection<GroupVKR> groupVKRs) {
+        this.groupVKRs = groupVKRs;
+    }
+
+    public User getName() {
+        return name;
+    }
+
+    public void setName(User name) {
+        this.name = name;
+    }
 
     public DirectorGraduateStudent getDirectorGraduateStudent() {
         return directorGraduateStudent;

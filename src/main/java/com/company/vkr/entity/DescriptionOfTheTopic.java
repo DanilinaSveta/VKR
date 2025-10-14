@@ -1,6 +1,8 @@
 package com.company.vkr.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 
@@ -17,18 +19,30 @@ public class DescriptionOfTheTopic {
     @Id
     private UUID id;
 
-    @JoinColumn(name = "TOPIC_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Topic topic;
+    @Column(name = "SHORT_DESCRIPTION", length = 100)
+    private String shortDescription;
 
-    @Column(name = "ANNOTATION")
-    private String annotation;
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     @Column(name = "LITERATURE_RECOMMENDATIONS")
     private String literatureRecommendations;
 
     @Column(name = "RECOMMENDED_SKILLS")
     private String recommendedSkills;
+
+    @JoinColumn(name = "TOPIC_ID")
+    @OnDeleteInverse(DeletePolicy.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Topic topic;
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
 
     public Topic getTopic() {
         return topic;
@@ -54,12 +68,12 @@ public class DescriptionOfTheTopic {
         this.literatureRecommendations = literatureRecommendations;
     }
 
-    public String getAnnotation() {
-        return annotation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public UUID getId() {

@@ -7,7 +7,7 @@ import org.springframework.lang.Nullable;
 
 public enum TopicActivity implements EnumClass<String> {
 
-    ;
+    ACTIVE("A");
 
     private final String id;
 

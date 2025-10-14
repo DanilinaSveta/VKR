@@ -1,6 +1,10 @@
 package com.company.vkr.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDelete;
+import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 
@@ -40,11 +44,23 @@ public class Topic {
     @Column(name = "AUTHOR_TOPIC")
     private String authorTopic;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "topic")
-    private DescriptionOfTheTopic descriptionOfTheTopic;
+    @InstanceName
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "topic")
+    private List<DescriptionOfTheTopic> description;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "topic")
     private DirectorGraduateStudent directorGraduateStudent;
+
+    public List<DescriptionOfTheTopic> getDescription() {
+        return description;
+    }
+
+    public void setDescription(List<DescriptionOfTheTopic> description) {
+        this.description = description;
+    }
+
 
     public DirectorGraduateStudent getDirectorGraduateStudent() {
         return directorGraduateStudent;
@@ -52,14 +68,6 @@ public class Topic {
 
     public void setDirectorGraduateStudent(DirectorGraduateStudent directorGraduateStudent) {
         this.directorGraduateStudent = directorGraduateStudent;
-    }
-
-    public DescriptionOfTheTopic getDescriptionOfTheTopic() {
-        return descriptionOfTheTopic;
-    }
-
-    public void setDescriptionOfTheTopic(DescriptionOfTheTopic descriptionOfTheTopic) {
-        this.descriptionOfTheTopic = descriptionOfTheTopic;
     }
 
     public String getAuthorTopic() {

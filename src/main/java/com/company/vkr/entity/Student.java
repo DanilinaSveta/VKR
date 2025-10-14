@@ -1,6 +1,7 @@
 package com.company.vkr.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jdk.jshell.Snippet;
@@ -9,13 +10,20 @@ import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "STUDENT")
+@Table(name = "STUDENT", indexes = {
+        @Index(name = "IDX_STUDENT_NAME", columnList = "NAME_ID")
+})
 @Entity
-public class Student implements author{
+public class Student implements author {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
+
+    @InstanceName
+    @JoinColumn(name = "NAME_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    private User name;
 
     @JoinTable(name = "STUDENT_SKILLS_LINK",
             joinColumns = @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID"),
@@ -34,6 +42,14 @@ public class Student implements author{
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "student")
     private DirectorGraduateStudent directorGraduateStudent;
+
+    public User getName() {
+        return name;
+    }
+
+    public void setName(User name) {
+        this.name = name;
+    }
 
     public DirectorGraduateStudent getDirectorGraduateStudent() {
         return directorGraduateStudent;
