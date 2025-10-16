@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @JmixEntity
 @Table(name = "GROUP_VKR", indexes = {
-        @Index(name = "IDX_GROUP_VKR_TEACHRT_NAME", columnList = "")
+        @Index(name = "IDX_GROUP_VKR", columnList = "")
 })
 @Entity
 public class GroupVKR {
@@ -18,24 +18,32 @@ public class GroupVKR {
     @Id
     private UUID id;
 
-    @Column(name = "SUDENT_NAME")
+    @Column(name = "STUDENT_NAME")
     private String studentName;
 
     @JoinTable(name = "GROUP_VKR_TEACHER_LINK",
-            joinColumns = @JoinColumn(name = "GROUP_V_K_R_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TEACHER_ID"))
+            joinColumns = @JoinColumn(name = "GROUP_V_K_R_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TEACHER_ID", referencedColumnName = "ID"))
     @ManyToMany
-    private List<Teacher> teachrtName;
+    private List<Teacher> teacherName;
 
     @Column(name = "PRIORITY")
     private String priority;
 
-    public void setTeachrtName(List<Teacher> teachrtName) {
-        this.teachrtName = teachrtName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public List<Teacher> getTeachrtName() {
-        return teachrtName;
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setTeacherName(List<Teacher> teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public List<Teacher> getTeacherName() {
+        return teacherName;
     }
 
     public String getPriority() {
@@ -44,14 +52,6 @@ public class GroupVKR {
 
     public void setPriority(String priority) {
         this.priority = priority;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
     }
 
     public UUID getId() {
