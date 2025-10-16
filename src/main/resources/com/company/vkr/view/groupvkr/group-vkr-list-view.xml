@@ -74,7 +74,7 @@
                         <responsiveStep minWidth="0" columns="1"/>
                         <responsiveStep minWidth="40em" columns="2"/>
                     </responsiveSteps>
-                    <textField id="studentNameField" property="studentName"/>
+                    <textField id="studentNameField" dataContainer="groupVKRDc" property="studentName" readOnly="true"/>
                     <entityPicker id="teacherNameField" property="teacherName">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>

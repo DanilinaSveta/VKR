@@ -8,10 +8,14 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import io.jmix.core.Metadata;
+import io.jmix.core.security.impl.CurrentAuthenticationImpl;
+import io.jmix.core.usersubstitution.CurrentUserSubstitution;
 import io.jmix.core.validation.group.UiCrossFieldChecks;
 import io.jmix.flowui.action.SecuredBaseAction;
 import io.jmix.flowui.component.UiComponentUtils;
 import io.jmix.flowui.component.grid.DataGrid;
+import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.component.validation.ValidationErrors;
 import io.jmix.flowui.kit.action.Action;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
@@ -21,6 +25,7 @@ import io.jmix.flowui.model.DataContext;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.model.InstanceLoader;
 import io.jmix.flowui.view.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "groupVKRs", layout = MainView.class)
 @ViewController(id = "GroupVKR.list")
@@ -53,6 +58,15 @@ public class GroupVKRListView extends StandardListView<GroupVKR> {
     @ViewComponent
     private HorizontalLayout detailActions;
 
+    @Autowired
+    private CurrentAuthenticationImpl currentAuthenticationImpl;
+    @Autowired
+    private CurrentUserSubstitution currentUserSubstitution;
+    @ViewComponent
+    private TypedTextField<String> studentNameField;
+    @Autowired
+    private Metadata metadata;
+
     @Subscribe
     public void onInit(final InitEvent event) {
         groupVKRsDataGrid.getActions().forEach(action -> {
@@ -61,6 +75,12 @@ public class GroupVKRListView extends StandardListView<GroupVKR> {
             }
         });
     }
+
+//    @Subscribe
+//    public void onInitEntity(StandardDetailView.InitEntityEvent<GroupVKR> event){
+//        String username = currentUserSubstitution.getAuthenticatedUser().getUsername();
+//        event.getEntity().setStudentName(username);
+//    }
 
     @Subscribe
     public void onBeforeShow(final BeforeShowEvent event) {
@@ -73,6 +93,11 @@ public class GroupVKRListView extends StandardListView<GroupVKR> {
         GroupVKR entity = dataContext.create(GroupVKR.class);
         groupVKRDc.setItem(entity);
         updateControls(true);
+
+        String username = currentUserSubstitution.getAuthenticatedUser().getUsername();
+        GroupVKR groupVKR = metadata.create(GroupVKR.class);
+        groupVKR.setStudentName(username);
+        groupVKRDc.setItem(groupVKR);
     }
 
     @Subscribe("groupVKRsDataGrid.edit")
