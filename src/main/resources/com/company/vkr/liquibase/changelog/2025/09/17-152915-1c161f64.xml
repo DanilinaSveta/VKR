@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="VKR">
+        <createTable tableName="GROUP_VKR_TEACHER_LINK">
+            <column name="GROUP_V_K_R_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GROUP_VKR_TEACHER_LINK"/>
+            </column>
+            <column name="TEACHER_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GROUP_VKR_TEACHER_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="GROUP_V_K_R_ID" baseTableName="GROUP_VKR_TEACHER_LINK"
+                                 constraintName="FK_GROVKRTEA_ON_GROUP_V_K_R" referencedColumnNames="ID"
+                                 referencedTableName="GROUP_VKR"/>
+    </changeSet>
+    <changeSet id="3" author="VKR">
+        <addForeignKeyConstraint baseColumnNames="TEACHER_ID" baseTableName="GROUP_VKR_TEACHER_LINK"
+                                 constraintName="FK_GROVKRTEA_ON_TEACHER" referencedColumnNames="ID"
+                                 referencedTableName="TEACHER"/>
+    </changeSet>
+    <changeSet id="4" author="VKR">
+        <dropColumn columnName="teachrt_name_id" tableName="group_vkr"/>
+    </changeSet>
+</databaseChangeLog>

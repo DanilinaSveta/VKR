@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="VKR">
+        <addColumn tableName="DESCRIPTION_OF_THE_TOPIC">
+            <column name="TOPIC_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="VKR">
+        <createIndex indexName="IDX_DESCRIPTION_OF_THE_TOPIC_TOPIC" tableName="DESCRIPTION_OF_THE_TOPIC">
+            <column name="TOPIC_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TOPIC_ID" baseTableName="DESCRIPTION_OF_THE_TOPIC"
+                                 constraintName="FK_DESCRIPTION_OF_THE_TOPIC_ON_TOPIC" onDelete="CASCADE"
+                                 referencedColumnNames="ID" referencedTableName="TOPIC"/>
+    </changeSet>
+    <changeSet id="3" author="VKR">
+        <dropColumn columnName="topic" tableName="description_of_the_topic"/>
+    </changeSet>
+</databaseChangeLog>

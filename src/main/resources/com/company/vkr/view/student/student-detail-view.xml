@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://studentDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="studentDc"
+                  class="com.company.vkr.entity.Student">
+            <fetchPlan extends="_base">
+                <property name="skills" fetchPlan="_base"/>
+                <property name="topics" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="studentDl"/>
+            <collection id="skillsDc" property="skills"/>
+            <collection id="topicsDc" property="topics"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="studentDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <entityPicker id="nameField" property="name">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="numberOfTopicField" property="numberOfTopic"/>
+        </formLayout>
+        <h4 text="Skills"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="skillsDataGrid.add"/>
+            <button action="skillsDataGrid.exclude"/>
+        </hbox>
+        <dataGrid id="skillsDataGrid" dataContainer="skillsDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="exclude" type="list_exclude"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+            </columns>
+        </dataGrid>
+        <h4 text="Topics"/>
+        <dataGrid id="topicsDataGrid" dataContainer="topicsDc" width="100%" minHeight="20em">
+            <columns>
+                <column property="topicName"/>
+                <column property="topicStatus"/>
+                <column property="activityTopic"/>
+                <column property="authorTopic"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

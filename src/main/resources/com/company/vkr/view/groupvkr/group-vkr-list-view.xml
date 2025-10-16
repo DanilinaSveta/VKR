@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://groupVKRListView.title"
+      focusComponent="groupVKRsDataGrid">
+    <data>
+        <collection id="groupVKRsDc"
+                    class="com.company.vkr.entity.GroupVKR">
+            <fetchPlan extends="_base"/>
+            <loader id="groupVKRsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from GroupVKR e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="groupVKRsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="groupVKRsDataGrid.create"/>
+            <button id="editButton" action="groupVKRsDataGrid.edit"/>
+            <button id="removeButton" action="groupVKRsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="groupVKRsDl"/>
+        </hbox>
+        <dataGrid id="groupVKRsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="groupVKRsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="studentName"/>
+                <column property="priority"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

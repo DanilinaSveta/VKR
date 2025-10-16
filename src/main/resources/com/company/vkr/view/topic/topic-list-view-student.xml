@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://topicListViewStudent.title"
+      focusComponent="topicsDataGrid">
+    <data>
+        <collection id="topicsDc"
+                    class="com.company.vkr.entity.Topic">
+            <fetchPlan extends="_base"/>
+            <loader id="topicsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Topic e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="topicsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="topicsDataGrid.create"/>
+            <button id="editButton" action="topicsDataGrid.edit"/>
+            <button id="removeButton" action="topicsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="topicsDl"/>
+        </hbox>
+        <dataGrid id="topicsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="topicsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="viewClass" value="com.company.vkr.view.topic.TopicDetailViewStudent"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="viewClass" value="com.company.vkr.view.topic.TopicDetailViewStudent"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="topicName"/>
+                <column property="topicStatus"/>
+                <column property="activityTopic"/>
+                <column property="authorTopic"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

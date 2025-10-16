@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://topicDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="topicDc"
+                  class="com.company.vkr.entity.Topic">
+            <fetchPlan extends="_base">
+                <property name="teacher" fetchPlan="_base"/>
+                <property name="student" fetchPlan="_base"/>
+                <property name="description" fetchPlan="_instance_name">
+                    <property name="description"/>
+                    <property name="literatureRecommendations"/>
+                    <property name="recommendedSkills"/>
+                </property>
+            </fetchPlan>
+            <loader id="topicDl"/>
+            <collection id="teacherDc" property="teacher"/>
+            <collection id="studentDc" property="student"/>
+            <collection id="descriptionDc" property="description"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="topicDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="topicNameField" property="topicName"/>
+            <select id="topicStatusField" property="topicStatus"/>
+            <select id="activityTopicField" property="activityTopic"/>
+            <textField id="authorTopicField" property="authorTopic"/>
+        </formLayout>
+        <h4 text="msg://com.company.vkr.entity/Topic.description"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="descriptionDataGrid.create"/>
+            <button action="descriptionDataGrid.edit"/>
+            <button action="descriptionDataGrid.remove"/>
+        </hbox>
+        <dataGrid id="descriptionDataGrid" dataContainer="descriptionDc" width="100%" minHeight="200px">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="shortDescription" width="100%"/>
+            </columns>
+        </dataGrid>
+
+        <h4 text="Student"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="studentDataGrid.add"/>
+            <button action="studentDataGrid.exclude"/>
+        </hbox>
+        <dataGrid id="studentDataGrid" dataContainer="studentDc" width="100%" minHeight="170px">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="exclude" type="list_exclude"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+                <column property="numberOfTopic"/>
+            </columns>
+        </dataGrid>
+
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>
