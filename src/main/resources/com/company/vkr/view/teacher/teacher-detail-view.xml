@@ -8,12 +8,12 @@
             <fetchPlan extends="_base">
                 <property name="skills" fetchPlan="_base"/>
                 <property name="topics" fetchPlan="_base"/>
-                <property name="groupVKRs" fetchPlan="_base"/>
+                <property name="groupVKR" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="teacherDl"/>
             <collection id="skillsDc" property="skills"/>
             <collection id="topicsDc" property="topics"/>
-            <collection id="groupVKRsDc" property="groupVKRs"/>
+            <collection id="groupsDc" property="groupVKR"/>
         </instance>
     </data>
     <facets>
@@ -38,7 +38,7 @@
             <textField id="numberOfTopicField" property="numberOfTopic"/>
             <textField id="maxNumberStudentField" property="maxNumberStudent"/>
         </formLayout>
-        <h4 text="msg://com.company.vkr.entity/Teacher.skills"/>
+        <h4 text="Skills"/>
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button action="skillsDataGrid.add"/>
             <button action="skillsDataGrid.exclude"/>
@@ -53,7 +53,15 @@
             </columns>
         </dataGrid>
         <h4 text="Topics"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="topicsDataGrid.add"/>
+            <button action="topicsDataGrid.exclude"/>
+        </hbox>
         <dataGrid id="topicsDataGrid" dataContainer="topicsDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="exclude" type="list_exclude"/>
+            </actions>
             <columns>
                 <column property="topicName"/>
                 <column property="topicStatus"/>
@@ -61,16 +69,16 @@
                 <column property="authorTopic"/>
             </columns>
         </dataGrid>
-        <h4 text="Group VKR"/>
+        <h4 text="Group"/>
         <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button action="groupVKRsDataGrid.add"/>
-            <button action="groupVKRsDataGrid.exclude"/>
+            <button action="groupsDataGrid.add"/>
+            <button action="groupsDataGrid.exclude"/>
         </hbox>
-        <dataGrid id="groupVKRsDataGrid" selectionMode="MULTI" dataContainer="groupVKRsDc" width="100%" minHeight="20em">
+        <dataGrid id="groupsDataGrid" dataContainer="groupsDc" width="100%" minHeight="20em" multiSort="true"
+                  selectionMode="MULTI">
             <actions>
                 <action id="add" type="list_add"/>
                 <action id="exclude" type="list_exclude"/>
-                <action id="remove" type="list_remove"/>
             </actions>
             <columns>
                 <column property="studentName"/>

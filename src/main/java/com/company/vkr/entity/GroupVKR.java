@@ -4,13 +4,10 @@ import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "GROUP_VKR", indexes = {
-        @Index(name = "IDX_GROUP_VKR", columnList = "")
-})
+@Table(name = "GROUP_VKR")
 @Entity
 public class GroupVKR {
     @JmixGeneratedValue
@@ -21,14 +18,20 @@ public class GroupVKR {
     @Column(name = "STUDENT_NAME")
     private String studentName;
 
-    @JoinTable(name = "GROUP_VKR_TEACHER_LINK",
-            joinColumns = @JoinColumn(name = "GROUP_V_K_R_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "TEACHER_ID", referencedColumnName = "ID"))
-    @ManyToMany
-    private List<Teacher> teacherName;
+    @JoinColumn(name = "TEACHER_NAME_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Teacher teacherName;
 
     @Column(name = "PRIORITY")
     private String priority;
+
+    public void setTeacherName(Teacher teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public Teacher getTeacherName() {
+        return teacherName;
+    }
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
@@ -36,14 +39,6 @@ public class GroupVKR {
 
     public String getStudentName() {
         return studentName;
-    }
-
-    public void setTeacherName(List<Teacher> teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    public List<Teacher> getTeacherName() {
-        return teacherName;
     }
 
     public String getPriority() {

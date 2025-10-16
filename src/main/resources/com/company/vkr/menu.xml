@@ -5,9 +5,9 @@
         <item view="User.list" title="msg://com.company.vkr.view.user/UserListView.title"/>
         <item view="Topic.list" title="msg://com.company.vkr.view.topic/topicListView.title"/>
         <item view="Student.list" title="msg://com.company.vkr.view.student/studentListView.title"/>
-        <item view="Teacher.list" title="msg://com.company.vkr.view.teacher/teacherListView.title"/>
-        <item view="GroupVKR.list" title="msg://com.company.vkr.view.groupvkr/groupVKRListView.title"/>
         <item view="TopicStudent.list" title="msg://com.company.vkr.view.topic/topicListViewStudent.title"/>
+        <item view="GroupVKR.list" title="msg://com.company.vkr.view.groupvkr/groupVKRListView.title"/>
+        <item view="Teacher.list" title="msg://com.company.vkr.view.teacher/teacherListView.title"/>
     </menu>
 
 </menu-config>

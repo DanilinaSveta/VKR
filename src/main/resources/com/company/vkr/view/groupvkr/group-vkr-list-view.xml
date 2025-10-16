@@ -6,13 +6,22 @@
     <data>
         <collection id="groupVKRsDc"
                     class="com.company.vkr.entity.GroupVKR">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="teacherName" fetchPlan="_base"/>
+            </fetchPlan>
             <loader id="groupVKRsDl" readOnly="true">
                 <query>
                     <![CDATA[select e from GroupVKR e]]>
                 </query>
             </loader>
         </collection>
+        <instance id="groupVKRDc"
+                  class="com.company.vkr.entity.GroupVKR">
+            <fetchPlan extends="_base">
+                <property name="teacherName" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="groupVKRDl"/>
+        </instance>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -25,35 +34,60 @@
         <action id="selectAction" type="lookup_select"/>
         <action id="discardAction" type="lookup_discard"/>
     </actions>
-    <layout>
-        <genericFilter id="genericFilter"
-                       dataLoader="groupVKRsDl">
-            <properties include=".*"/>
-        </genericFilter>
-        <hbox id="buttonsPanel" classNames="buttons-panel">
-            <button id="createButton" action="groupVKRsDataGrid.create"/>
-            <button id="editButton" action="groupVKRsDataGrid.edit"/>
-            <button id="removeButton" action="groupVKRsDataGrid.remove"/>
-            <simplePagination id="pagination" dataLoader="groupVKRsDl"/>
-        </hbox>
-        <dataGrid id="groupVKRsDataGrid"
-                  width="100%"
-                  minHeight="20em"
-                  dataContainer="groupVKRsDc"
-                  columnReorderingAllowed="true">
-            <actions>
-                <action id="create" type="list_create"/>
-                <action id="edit" type="list_edit"/>
-                <action id="remove" type="list_remove"/>
-            </actions>
-            <columns resizable="true">
-                <column property="studentName"/>
-                <column property="priority"/>
-            </columns>
-        </dataGrid>
-        <hbox id="lookupActions" visible="false">
-            <button id="selectButton" action="selectAction"/>
-            <button id="discardButton" action="discardAction"/>
-        </hbox>
+    <layout padding="false">
+        <formLayout id="layoutWrapper" classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="groupVKRsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createButton" action="groupVKRsDataGrid.create"/>
+                    <button id="editButton" action="groupVKRsDataGrid.edit"/>
+                    <button id="removeButton" action="groupVKRsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="groupVKRsDl"/>
+                </hbox>
+                <dataGrid id="groupVKRsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="groupVKRsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="studentName"/>
+                        <column property="teacherName" header="TeacherName"/>
+                        <column property="priority"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectButton" action="selectAction"/>
+                    <button id="discardButton" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="groupVKRDc">
+                    <responsiveSteps>
+                        <responsiveStep minWidth="0" columns="1"/>
+                        <responsiveStep minWidth="40em" columns="2"/>
+                    </responsiveSteps>
+                    <textField id="studentNameField" property="studentName"/>
+                    <entityPicker id="teacherNameField" property="teacherName">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <textField id="priorityField" property="priority"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveButton" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelButton" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
     </layout>
 </view>

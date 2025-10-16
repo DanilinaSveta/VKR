@@ -27,12 +27,12 @@ public interface TeacherRole {
     @EntityPolicy(entityClass = GroupVKR.class, actions = EntityPolicyAction.ALL)
     void groupVKR();
 
-    @EntityAttributePolicy(entityClass = Student.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityAttributePolicy(entityClass = Student.class, attributes = {"name", "skills", "numberOfTopic", "topics"}, action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = Student.class, actions = EntityPolicyAction.READ)
     void student();
 
     @EntityAttributePolicy(entityClass = Teacher.class, attributes = "id", action = EntityAttributePolicyAction.VIEW)
-    @EntityAttributePolicy(entityClass = Teacher.class, attributes = {"name", "numberOfTopic", "maxNumberStudent", "skills", "topics", "directorGraduateStudent", "groupVKRs"}, action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = Teacher.class, attributes = {"name", "numberOfTopic", "maxNumberStudent", "skills", "topics", "groupVKR"}, action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Teacher.class, actions = EntityPolicyAction.ALL)
     void teacher();
 

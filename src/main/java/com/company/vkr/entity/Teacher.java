@@ -6,7 +6,6 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jdk.jshell.Snippet;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,21 +43,18 @@ public class Teacher implements author {
     @ManyToMany
     private List<Topic> topics;
 
+    @OneToMany(mappedBy = "teacherName")
+    private List<GroupVKR> groupVKR;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "teacher")
     private DirectorGraduateStudent directorGraduateStudent;
 
-    @JoinTable(name = "GROUP_VKR_TEACHER_LINK",
-            joinColumns = @JoinColumn(name = "TEACHER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "GROUP_V_K_R_ID"))
-    @ManyToMany
-    private Collection<GroupVKR> groupVKRs;
-
-    public Collection<GroupVKR> getGroupVKRs() {
-        return groupVKRs;
+    public List<GroupVKR> getGroupVKR() {
+        return groupVKR;
     }
 
-    public void setGroupVKRs(Collection<GroupVKR> groupVKRs) {
-        this.groupVKRs = groupVKRs;
+    public void setGroupVKR(List<GroupVKR> groupVKR) {
+        this.groupVKR = groupVKR;
     }
 
     public User getName() {

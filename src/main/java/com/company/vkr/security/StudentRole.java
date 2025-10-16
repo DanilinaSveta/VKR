@@ -36,11 +36,11 @@ public interface StudentRole {
     @EntityPolicy(entityClass = Student.class, actions = EntityPolicyAction.ALL)
     void student();
 
-    @EntityAttributePolicy(entityClass = Teacher.class, attributes = {"id", "name", "numberOfTopic", "maxNumberStudent", "skills", "topics", "groupVKRs"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityAttributePolicy(entityClass = Teacher.class, attributes = {"id", "name", "numberOfTopic", "maxNumberStudent", "skills", "topics", "groupVKR"}, action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = Teacher.class, actions = EntityPolicyAction.READ)
     void teacher();
 
-    @EntityAttributePolicy(entityClass = Topic.class, attributes = {"id", "directorGraduateStudent"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityAttributePolicy(entityClass = Topic.class, attributes = {"id", "directorGraduateStudent", "student"}, action = EntityAttributePolicyAction.VIEW)
     @EntityAttributePolicy(entityClass = Topic.class, attributes = {"topicName", "teacher", "topicStatus", "activityTopic", "authorTopic", "description"}, action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Topic.class, actions = EntityPolicyAction.ALL)
     void topic();
